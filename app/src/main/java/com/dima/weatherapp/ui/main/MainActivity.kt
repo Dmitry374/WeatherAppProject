@@ -7,6 +7,9 @@ import com.dima.weatherapp.R
 import com.dima.weatherapp.di.component.DaggerActivityComponent
 import com.dima.weatherapp.di.module.ActivityModule
 import com.dima.weatherapp.ui.detail.DetailFragment
+import com.dima.weatherapp.util.Constants.Companion.KIEV_CITY_ID
+import com.dima.weatherapp.util.Constants.Companion.LONDON_CITY_ID
+import com.dima.weatherapp.util.Constants.Companion.MOSCOW_CITY_ID
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
@@ -22,11 +25,13 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
         presenter.attach(this)
 
-        var list: List<String> = arrayListOf("One", "Two", "Three")
+        val list: List<String> = arrayListOf("One", "Two", "Three")
 
         val fragmentAdapter = MyPagerAdapter(supportFragmentManager)
         fragmentAdapter.setTitlesList(list)
         viewpager_main.adapter = fragmentAdapter
+
+        presenter.loadData("$MOSCOW_CITY_ID,$KIEV_CITY_ID,$LONDON_CITY_ID")
 
     }
 
