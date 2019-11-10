@@ -8,31 +8,39 @@ import androidx.fragment.app.Fragment
 import com.dima.weatherapp.R
 import com.dima.weatherapp.di.component.DaggerFragmentComponent
 import com.dima.weatherapp.di.module.FragmentModule
-import com.dima.weatherapp.ui.detail.DetailFragment
-import com.dima.weatherapp.ui.main.MainActivity
-import kotlinx.android.synthetic.main.fragment_list.*
+import kotlinx.android.synthetic.main.fragment_weather_list.*
 import javax.inject.Inject
 
-class ListFragment : Fragment(), ListContract.View {
+class WeatherListFragment : Fragment(), WeatherListContract.View {
 
     @Inject
-    lateinit var presenter: ListContract.Presenter
+    lateinit var presenter: WeatherListContract.Presenter
+
+    private val ARG_PARAM1 = "param1"
+
+    private var mParam1: String? = null
 
     private lateinit var rootView: View
 
-    companion object {
-        val TAG: String = ListFragment::class.java.simpleName
-        @JvmStatic
-        fun newInstance() = ListFragment()
+    fun newInstance(param1: String): WeatherListFragment {
+        val fragment = WeatherListFragment()
+        val args = Bundle()
+        args.putString(ARG_PARAM1, param1)
+        fragment.arguments = args
+        return fragment
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         injectDependency()
+        retainInstance = true
+        if (arguments != null) {
+            mParam1 = arguments!!.getString(ARG_PARAM1)
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        rootView = inflater.inflate(R.layout.fragment_list, container, false)
+        rootView = inflater.inflate(R.layout.fragment_weather_list, container, false)
         return rootView
     }
 
@@ -42,10 +50,7 @@ class ListFragment : Fragment(), ListContract.View {
         presenter.subscribe()
         initView()
 
-        btnClick.setOnClickListener {
-            val fragment = DetailFragment.newInstance()
-            (activity as MainActivity).replaceFragment(fragment, DetailFragment.TAG)
-        }
+        tvtext.setText("Page number: $mParam1")
     }
 
     override fun onDestroyView() {

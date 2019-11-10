@@ -7,7 +7,7 @@ import com.dima.weatherapp.R
 import com.dima.weatherapp.di.component.DaggerActivityComponent
 import com.dima.weatherapp.di.module.ActivityModule
 import com.dima.weatherapp.ui.detail.DetailFragment
-import com.dima.weatherapp.ui.list.ListFragment
+import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), MainContract.View {
@@ -21,6 +21,13 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         injectDependency()
 
         presenter.attach(this)
+
+        var list: List<String> = arrayListOf("One", "Two", "Three")
+
+        val fragmentAdapter = MyPagerAdapter(supportFragmentManager)
+        fragmentAdapter.setTitlesList(list)
+        viewpager_main.adapter = fragmentAdapter
+
     }
 
     private fun injectDependency() {
@@ -32,17 +39,17 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     override fun showListFragment() {
-        supportFragmentManager.beginTransaction()
-            .disallowAddToBackStack()
-            .replace(R.id.frame, ListFragment.newInstance(), ListFragment.TAG)
-            .commit()
+//        supportFragmentManager.beginTransaction()
+//            .disallowAddToBackStack()
+//            .replace(R.id.frame, ListFragment.newInstance(), ListFragment.TAG)
+//            .commit()
     }
 
     override fun replaceFragment(fragment: Fragment, tag: String) {
-        supportFragmentManager.beginTransaction()
-            .setCustomAnimations(AnimType.SLIDE.getAnimPair().first, AnimType.SLIDE.getAnimPair().second)
-            .replace(R.id.frame, fragment, tag).addToBackStack("")
-            .commit()
+//        supportFragmentManager.beginTransaction()
+//            .setCustomAnimations(AnimType.SLIDE.getAnimPair().first, AnimType.SLIDE.getAnimPair().second)
+//            .replace(R.id.frame, fragment, tag).addToBackStack("")
+//            .commit()
     }
 
     override fun onBackPressed() {

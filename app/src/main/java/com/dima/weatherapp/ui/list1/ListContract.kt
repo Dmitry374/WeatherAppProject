@@ -1,4 +1,4 @@
-package com.dima.weatherapp.ui.list
+package com.dima.weatherapp.ui.list1
 
 import com.dima.weatherapp.ui.base.BaseContract
 
