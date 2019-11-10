@@ -1,16 +1,22 @@
 package com.dima.weatherapp.ui.main
 
+import io.reactivex.disposables.CompositeDisposable
+
 class MainPresenter : MainContract.Presenter {
 
+    private val subscriptions = CompositeDisposable()
+    private lateinit var view: MainContract.View
+
     override fun subscribe() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun unsubscribe() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        subscriptions.clear()
     }
 
     override fun attach(view: MainContract.View) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        this.view = view
+        view.showListFragment() // as default
     }
 }
