@@ -1,4 +1,4 @@
-package com.dima.weatherapp.ui.list
+package com.dima.weatherapp.ui.detail
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,22 +8,19 @@ import androidx.fragment.app.Fragment
 import com.dima.weatherapp.R
 import com.dima.weatherapp.di.component.DaggerFragmentComponent
 import com.dima.weatherapp.di.module.FragmentModule
-import com.dima.weatherapp.ui.detail.DetailFragment
-import com.dima.weatherapp.ui.main.MainActivity
-import kotlinx.android.synthetic.main.fragment_list.*
 import javax.inject.Inject
 
-class ListFragment : Fragment(), ListContract.View {
+class DetailFragment : Fragment(), DetailContract.View {
 
     @Inject
-    lateinit var presenter: ListContract.Presenter
+    lateinit var presenter: DetailContract.Presenter
 
     private lateinit var rootView: View
 
     companion object {
-        val TAG: String = ListFragment::class.java.simpleName
+        val TAG: String = DetailFragment::class.java.simpleName
         @JvmStatic
-        fun newInstance() = ListFragment()
+        fun newInstance() = DetailFragment()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,7 +29,7 @@ class ListFragment : Fragment(), ListContract.View {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        rootView = inflater.inflate(R.layout.fragment_list, container, false)
+        rootView = inflater.inflate(R.layout.fragment_detail, container, false)
         return rootView
     }
 
@@ -41,11 +38,6 @@ class ListFragment : Fragment(), ListContract.View {
         presenter.attach(this)
         presenter.subscribe()
         initView()
-
-        btnClick.setOnClickListener {
-            val fragment = DetailFragment.newInstance()
-            (activity as MainActivity).replaceFragment(fragment, DetailFragment.TAG)
-        }
     }
 
     override fun onDestroyView() {

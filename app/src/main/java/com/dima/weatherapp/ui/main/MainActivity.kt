@@ -2,9 +2,11 @@ package com.dima.weatherapp.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import com.dima.weatherapp.R
 import com.dima.weatherapp.di.component.DaggerActivityComponent
 import com.dima.weatherapp.di.module.ActivityModule
+import com.dima.weatherapp.ui.detail.DetailFragment
 import com.dima.weatherapp.ui.list.ListFragment
 import javax.inject.Inject
 
@@ -32,9 +34,26 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     override fun showListFragment() {
         supportFragmentManager.beginTransaction()
             .disallowAddToBackStack()
-            .setCustomAnimations(AnimType.SLIDE.getAnimPair().first, AnimType.SLIDE.getAnimPair().second)
-            .replace(R.id.frame, ListFragment().newInstance(), ListFragment.TAG)
+            .replace(R.id.frame, ListFragment.newInstance(), ListFragment.TAG)
             .commit()
+    }
+
+    override fun replaceFragment(fragment: Fragment, tag: String) {
+        supportFragmentManager.beginTransaction()
+            .setCustomAnimations(AnimType.SLIDE.getAnimPair().first, AnimType.SLIDE.getAnimPair().second)
+            .replace(R.id.frame, fragment, tag).addToBackStack("")
+            .commit()
+    }
+
+    override fun onBackPressed() {
+        val fragmentManager = supportFragmentManager
+        val fragment = fragmentManager.findFragmentByTag(DetailFragment.TAG)
+
+        if (fragment == null) {
+            super.onBackPressed()
+        } else {
+            supportFragmentManager.popBackStack()
+        }
     }
 
     enum class AnimType {

@@ -1,6 +1,7 @@
 package com.dima.weatherapp.di.component
 
 import com.dima.weatherapp.di.module.FragmentModule
+import com.dima.weatherapp.ui.detail.DetailFragment
 import com.dima.weatherapp.ui.list.ListFragment
 import dagger.Component
 
@@ -8,5 +9,7 @@ import dagger.Component
 interface FragmentComponent {
 
     fun inject(listFragment: ListFragment)
+
+    fun inject(detailFragment: DetailFragment)
 
 }
