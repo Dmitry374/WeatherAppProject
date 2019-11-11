@@ -4,21 +4,22 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import com.dima.weatherapp.data.model.Model
 import com.dima.weatherapp.ui.list.WeatherListFragment
 
 class MyPagerAdapter(fm: FragmentManager?) : FragmentStatePagerAdapter(fm) {
 
     private lateinit var weatherListFragment: WeatherListFragment
-    private var fragmentTitleList = ArrayList<String>()
+    private lateinit var weatherCity: Model.WeatherCity
 
-    fun setTitlesList(fragmentTitleList: List<String>) {
-        this.fragmentTitleList = fragmentTitleList as ArrayList<String>
+    fun setTitlesList(weatherCity: Model.WeatherCity) {
+        this.weatherCity = weatherCity
     }
 
     override fun getItem(position: Int): Fragment? {
 
-        var weatherListFragment: WeatherListFragment = WeatherListFragment()
-            .newInstance(fragmentTitleList[position])
+        val weatherListFragment: WeatherListFragment = WeatherListFragment()
+            .newInstance(weatherCity.list[position])
         if (position == 0) {
             this.weatherListFragment = weatherListFragment
         }
@@ -26,11 +27,11 @@ class MyPagerAdapter(fm: FragmentManager?) : FragmentStatePagerAdapter(fm) {
     }
 
     override fun getCount(): Int {
-        return fragmentTitleList.size
+        return weatherCity.list.size
     }
 
     override fun getPageTitle(position: Int): CharSequence? {
-        return fragmentTitleList[position]
+        return weatherCity.list[position].name
     }
 
     override fun setPrimaryItem(container: ViewGroup, position: Int, `object`: Any) {

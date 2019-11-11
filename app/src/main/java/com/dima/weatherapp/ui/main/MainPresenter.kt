@@ -37,6 +37,8 @@ class MainPresenter(private val repository: Repository) : MainContract.Presenter
             .subscribe({ weatherCity: Model.WeatherCity? ->
                 if (weatherCity != null) {
                     repository.saveWeatherCity(weatherCity)
+
+                    view.showList(weatherCity)
                 }
             }, { error ->
                 error.printStackTrace()

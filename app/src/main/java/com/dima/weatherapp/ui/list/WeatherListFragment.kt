@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.dima.weatherapp.App
 import com.dima.weatherapp.R
+import com.dima.weatherapp.data.model.Model
 import kotlinx.android.synthetic.main.fragment_weather_list.*
 import javax.inject.Inject
 
@@ -15,16 +16,16 @@ class WeatherListFragment : Fragment(), WeatherListContract.View {
     @Inject
     lateinit var presenter: WeatherListContract.Presenter
 
-    private val ARG_PARAM1 = "param1"
+    private val WEATHER_LIST_ITEM = "weather_list_item"
 
-    private var mParam1: String? = null
+    private lateinit var modelListItem: Model.List
 
     private lateinit var rootView: View
 
-    fun newInstance(param1: String): WeatherListFragment {
+    fun newInstance(modelListItem: Model.List): WeatherListFragment {
         val fragment = WeatherListFragment()
         val args = Bundle()
-        args.putString(ARG_PARAM1, param1)
+        args.putParcelable(WEATHER_LIST_ITEM, modelListItem)
         fragment.arguments = args
         return fragment
     }
@@ -34,7 +35,7 @@ class WeatherListFragment : Fragment(), WeatherListContract.View {
         super.onCreate(savedInstanceState)
         retainInstance = true
         if (arguments != null) {
-            mParam1 = arguments!!.getString(ARG_PARAM1)
+            modelListItem = arguments!!.getParcelable(WEATHER_LIST_ITEM)!!
         }
     }
 
@@ -49,7 +50,7 @@ class WeatherListFragment : Fragment(), WeatherListContract.View {
         presenter.subscribe()
         initView()
 
-        tvtext.setText("Page number: $mParam1")
+        tvtext.text = modelListItem.name
     }
 
     override fun onDestroyView() {

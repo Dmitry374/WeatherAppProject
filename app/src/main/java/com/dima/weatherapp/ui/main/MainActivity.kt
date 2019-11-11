@@ -1,11 +1,12 @@
 package com.dima.weatherapp.ui.main
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.dima.weatherapp.App
 import com.dima.weatherapp.R
 import com.dima.weatherapp.data.internaldata.Repository
+import com.dima.weatherapp.data.model.Model
 import com.dima.weatherapp.ui.detail.DetailFragment
 import com.dima.weatherapp.util.Constants.Companion.KIEV_CITY_ID
 import com.dima.weatherapp.util.Constants.Companion.LONDON_CITY_ID
@@ -28,14 +29,14 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
         presenter.attach(this)
 
-        val list: List<String> = arrayListOf("One", "Two", "Three")
-
-        val fragmentAdapter = MyPagerAdapter(supportFragmentManager)
-        fragmentAdapter.setTitlesList(list)
-        viewpager_main.adapter = fragmentAdapter
-
         presenter.loadData("$MOSCOW_CITY_ID,$KIEV_CITY_ID,$LONDON_CITY_ID")
 
+    }
+
+    override fun showList(weatherCity: Model.WeatherCity) {
+        val fragmentAdapter = MyPagerAdapter(supportFragmentManager)
+        fragmentAdapter.setTitlesList(weatherCity)
+        viewpager_main.adapter = fragmentAdapter
     }
 
     override fun showListFragment() {
