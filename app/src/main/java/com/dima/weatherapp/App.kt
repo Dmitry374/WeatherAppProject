@@ -16,7 +16,7 @@ class App : Application() {
         appComponent = DaggerAppComponent.builder()
             .build()
 
-        appComponent.inject(this)
+        //appComponent.inject(this)
     }
 
     fun getAppComponent() : AppComponent {

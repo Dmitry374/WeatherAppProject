@@ -1,14 +1,15 @@
 package com.dima.weatherapp.api
 
 import com.dima.weatherapp.BuildConfig
-import com.dima.weatherapp.model.Model
+import com.dima.weatherapp.data.model.Model
 import com.dima.weatherapp.util.Constants.Companion.BASE_URL
 import io.reactivex.Observable
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.*
+import retrofit2.http.GET
+import retrofit2.http.QueryMap
 
 interface ApiServiceInterface {
 

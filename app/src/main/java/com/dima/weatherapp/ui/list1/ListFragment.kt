@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.dima.weatherapp.App
 import com.dima.weatherapp.R
-import com.dima.weatherapp.di.component.DaggerFragmentComponent
 import com.dima.weatherapp.di.module.FragmentModule
 import com.dima.weatherapp.ui.detail.DetailFragment
 import com.dima.weatherapp.ui.main.MainActivity
@@ -27,8 +27,9 @@ class ListFragment : Fragment(), ListContract.View {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        App.instance.getAppComponent().inject(this)
         super.onCreate(savedInstanceState)
-        injectDependency()
+//        injectDependency()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -53,13 +54,13 @@ class ListFragment : Fragment(), ListContract.View {
         presenter.unsubscribe()
     }
 
-    private fun injectDependency() {
-        val listComponent = DaggerFragmentComponent.builder()
-            .fragmentModule(FragmentModule())
-            .build()
-
-        listComponent.inject(this)
-    }
+//    private fun injectDependency() {
+//        val listComponent = DaggerFragmentComponent.builder()
+//            .fragmentModule(FragmentModule())
+//            .build()
+//
+//        listComponent.inject(this)
+//    }
 
     private fun initView() {
 //        presenter.loadData()

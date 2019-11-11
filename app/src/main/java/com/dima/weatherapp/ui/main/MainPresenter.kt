@@ -1,19 +1,20 @@
 package com.dima.weatherapp.ui.main
 
-import com.dima.weatherapp.api.ApiServiceInterface
-import com.dima.weatherapp.model.Model
+import com.dima.weatherapp.api.RemoteRepositoryImpl
+import com.dima.weatherapp.data.internaldata.Repository
+import com.dima.weatherapp.data.model.Model
 import com.dima.weatherapp.util.Constants
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class MainPresenter : MainContract.Presenter {
+class MainPresenter(private val repository: Repository) : MainContract.Presenter {
 
     private val subscriptions = CompositeDisposable()
-    private val api: ApiServiceInterface = ApiServiceInterface.create()
+    private val storeRepository = RemoteRepositoryImpl()
     private lateinit var view: MainContract.View
 
-    val map = mutableMapOf<String, String>()
+    private val map = mutableMapOf<String, String>()
 
     override fun subscribe() {
 
@@ -30,11 +31,13 @@ class MainPresenter : MainContract.Presenter {
         map["units"] = "metric"
         map["appid"] = Constants.API_KEY
 
-        val subscribe = api.getCityWeatherList(map)
+        val subscribe = storeRepository.getCityWeatherList(map)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ weatherCity: Model.WeatherCity? ->
-                println(weatherCity)
+                if (weatherCity != null) {
+                    repository.saveWeatherCity(weatherCity)
+                }
             }, { error ->
                 error.printStackTrace()
             })

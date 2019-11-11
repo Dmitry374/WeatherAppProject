@@ -3,9 +3,9 @@ package com.dima.weatherapp.ui.main
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import com.dima.weatherapp.App
 import com.dima.weatherapp.R
-import com.dima.weatherapp.di.component.DaggerActivityComponent
-import com.dima.weatherapp.di.module.ActivityModule
+import com.dima.weatherapp.data.internaldata.Repository
 import com.dima.weatherapp.ui.detail.DetailFragment
 import com.dima.weatherapp.util.Constants.Companion.KIEV_CITY_ID
 import com.dima.weatherapp.util.Constants.Companion.LONDON_CITY_ID
@@ -18,10 +18,13 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     @Inject
     lateinit var presenter: MainContract.Presenter
 
+    @Inject
+    lateinit var repository: Repository
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        App.instance.getAppComponent().inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        injectDependency()
 
         presenter.attach(this)
 
@@ -33,14 +36,6 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
         presenter.loadData("$MOSCOW_CITY_ID,$KIEV_CITY_ID,$LONDON_CITY_ID")
 
-    }
-
-    private fun injectDependency() {
-        val activityComponent = DaggerActivityComponent.builder()
-            .activityModule(ActivityModule(this))
-            .build()
-
-        activityComponent.inject(this)
     }
 
     override fun showListFragment() {
@@ -66,6 +61,11 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         } else {
             supportFragmentManager.popBackStack()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.unsubscribe()
     }
 
     enum class AnimType {

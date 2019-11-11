@@ -1,6 +1,6 @@
 package com.dima.weatherapp.di.module
 
-import android.app.Application
+import android.content.Context
 import com.dima.weatherapp.App
 import dagger.Module
 import dagger.Provides
@@ -11,7 +11,7 @@ class AppModule(private val app: App) {
 
     @Provides
     @Singleton
-    fun provideApp(): Application {
+    fun provideContext(): Context {
         return app
     }
 }

@@ -1,4 +1,4 @@
-package com.dima.weatherapp.model
+package com.dima.weatherapp.data.model
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
