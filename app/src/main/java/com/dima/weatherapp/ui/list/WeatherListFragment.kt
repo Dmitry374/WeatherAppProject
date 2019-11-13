@@ -9,7 +9,10 @@ import com.dima.weatherapp.App
 import com.dima.weatherapp.R
 import com.dima.weatherapp.data.model.Model
 import kotlinx.android.synthetic.main.fragment_weather_list.*
+import java.text.SimpleDateFormat
 import javax.inject.Inject
+import kotlin.math.roundToInt
+
 
 class WeatherListFragment : Fragment(), WeatherListContract.View {
 
@@ -49,8 +52,6 @@ class WeatherListFragment : Fragment(), WeatherListContract.View {
         presenter.attach(this)
         presenter.subscribe()
         initView()
-
-        tvtext.text = modelListItem.name
     }
 
     override fun onDestroyView() {
@@ -59,7 +60,25 @@ class WeatherListFragment : Fragment(), WeatherListContract.View {
     }
 
     private fun initView() {
-//        presenter.loadData()
+        tvMain.text = modelListItem.weather[0].main
+        tvDescription.text = modelListItem.weather[0].description
+        tvDate.text = getDateTime(modelListItem.dt)
+
+        tvTemp.text = getString(R.string.temp, modelListItem.main.temp.roundToInt())
+        tvPressure.text = getString(R.string.pressure, modelListItem.main.pressure)
+        tvHumidity.text = getString(R.string.humidity, modelListItem.main.humidity)
+        tvTempMin.text = getString(R.string.temp_min, modelListItem.main.temp_min)
+        tvTempMax.text = getString(R.string.temp_max, modelListItem.main.temp_max)
+    }
+
+    private fun getDateTime(seconds: Int): String? {
+        return try {
+            val sdf = SimpleDateFormat("dd.MM.yyyy")
+            val date = java.util.Date(seconds * 1000L)
+            sdf.format(date)
+        } catch (e: Exception) {
+            e.toString()
+        }
     }
 
 }

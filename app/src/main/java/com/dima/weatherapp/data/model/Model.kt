@@ -27,7 +27,7 @@ object Model {
     data class Wind(var speed: Double, var deg: Int) : Parcelable
 
     @Parcelize
-    data class Main(var temp: Double, var pressure: Double, var humidity: Int, var temp_min: Int,
+    data class Main(var temp: Double, var pressure: Int, var humidity: Int, var temp_min: Int,
                     var temp_max: Int) : Parcelable
 
     @Parcelize
