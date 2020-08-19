@@ -8,10 +8,10 @@ import com.dima.weatherapp.R
 import com.dima.weatherapp.data.internaldata.Repository
 import com.dima.weatherapp.data.model.Model
 import com.dima.weatherapp.ui.detail.DetailFragment
+import com.dima.weatherapp.ui.tabs.TabsFragment
 import com.dima.weatherapp.util.Constants.Companion.KIEV_CITY_ID
 import com.dima.weatherapp.util.Constants.Companion.LONDON_CITY_ID
 import com.dima.weatherapp.util.Constants.Companion.MOSCOW_CITY_ID
-import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), MainContract.View {
@@ -33,24 +33,25 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     }
 
-    override fun showList(weatherCity: Model.WeatherCity) {
-        val fragmentAdapter = MyPagerAdapter(supportFragmentManager)
-        fragmentAdapter.setTitlesList(weatherCity)
-        viewpager_main.adapter = fragmentAdapter
-    }
-
-    override fun showListFragment() {
-//        supportFragmentManager.beginTransaction()
-//            .disallowAddToBackStack()
-//            .replace(R.id.frame, ListFragment.newInstance(), ListFragment.TAG)
-//            .commit()
+    override fun showTabsFragment(weatherCity: Model.WeatherCity) {
+        supportFragmentManager.beginTransaction()
+            .disallowAddToBackStack()
+            .replace(R.id.frame, TabsFragment().newInstance(weatherCity), TabsFragment.TAG)
+            .commit()
     }
 
     override fun replaceFragment(fragment: Fragment, tag: String) {
-//        supportFragmentManager.beginTransaction()
-//            .setCustomAnimations(AnimType.SLIDE.getAnimPair().first, AnimType.SLIDE.getAnimPair().second)
-//            .replace(R.id.frame, fragment, tag).addToBackStack("")
-//            .commit()
+        supportFragmentManager.beginTransaction()
+            .setCustomAnimations(AnimType.SLIDE.getAnimPair().first, AnimType.SLIDE.getAnimPair().second)
+            .replace(R.id.frame, fragment, tag).addToBackStack("")
+            .commit()
+    }
+
+    override fun nextFragment(fragment: Fragment, tag: String) {
+        supportFragmentManager.beginTransaction()
+            .setCustomAnimations(AnimType.SLIDE.getAnimPair().first, AnimType.SLIDE.getAnimPair().second)
+            .add(R.id.frame, fragment, tag).addToBackStack(null)
+            .commit()
     }
 
     override fun onBackPressed() {

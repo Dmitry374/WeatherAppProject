@@ -7,8 +7,8 @@ import com.dima.weatherapp.di.module.FragmentModule
 import com.dima.weatherapp.di.module.RepositoryModule
 import com.dima.weatherapp.ui.detail.DetailFragment
 import com.dima.weatherapp.ui.list.WeatherListFragment
-import com.dima.weatherapp.ui.list1.ListFragment
 import com.dima.weatherapp.ui.main.MainActivity
+import com.dima.weatherapp.ui.tabs.TabsFragment
 import dagger.Component
 import javax.inject.Singleton
 
@@ -20,7 +20,7 @@ interface AppComponent {
 
     fun inject(mainActivity: MainActivity)
 
-    fun inject(listFragment: ListFragment)
+    fun inject(tabsFragment: TabsFragment)
 
     fun inject(weatherListFragment: WeatherListFragment)
 

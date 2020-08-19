@@ -1,4 +1,4 @@
-package com.dima.weatherapp.ui.main
+package com.dima.weatherapp.ui.tabs
 
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -9,7 +9,7 @@ import com.dima.weatherapp.ui.list.WeatherListFragment
 
 class MyPagerAdapter(fm: FragmentManager?) : FragmentStatePagerAdapter(fm) {
 
-    private lateinit var weatherListFragment: WeatherListFragment
+    private var weatherListFragment: WeatherListFragment? = null
     private lateinit var weatherCity: Model.WeatherCity
 
     fun setTitlesList(weatherCity: Model.WeatherCity) {
@@ -20,9 +20,6 @@ class MyPagerAdapter(fm: FragmentManager?) : FragmentStatePagerAdapter(fm) {
 
         val weatherListFragment: WeatherListFragment = WeatherListFragment()
             .newInstance(weatherCity.list[position])
-        if (position == 0) {
-            this.weatherListFragment = weatherListFragment
-        }
         return weatherListFragment
     }
 
@@ -41,7 +38,7 @@ class MyPagerAdapter(fm: FragmentManager?) : FragmentStatePagerAdapter(fm) {
         super.setPrimaryItem(container, position, `object`)
     }
 
-    private fun getBlankFragment(): WeatherListFragment {
+    private fun getBlankFragment(): WeatherListFragment? {
         return weatherListFragment
     }
 }

@@ -7,9 +7,10 @@ import com.dima.weatherapp.ui.base.BaseContract
 class MainContract {
 
     interface View: BaseContract.View {
-        fun showListFragment()
         fun replaceFragment(fragment: Fragment, tag: String)
-        fun showList(weatherCity: Model.WeatherCity)
+        fun nextFragment(fragment: Fragment, tag: String)
+
+        fun showTabsFragment(weatherCity: Model.WeatherCity)
     }
 
     interface Presenter: BaseContract.Presenter<MainContract.View> {

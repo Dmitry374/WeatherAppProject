@@ -8,11 +8,12 @@ import androidx.fragment.app.Fragment
 import com.dima.weatherapp.App
 import com.dima.weatherapp.R
 import com.dima.weatherapp.data.model.Model
+import com.dima.weatherapp.ui.detail.DetailFragment
+import com.dima.weatherapp.ui.main.MainActivity
 import kotlinx.android.synthetic.main.fragment_weather_list.*
 import java.text.SimpleDateFormat
 import javax.inject.Inject
 import kotlin.math.roundToInt
-
 
 class WeatherListFragment : Fragment(), WeatherListContract.View {
 
@@ -52,6 +53,11 @@ class WeatherListFragment : Fragment(), WeatherListContract.View {
         presenter.attach(this)
         presenter.subscribe()
         initView()
+
+        cardWeather.setOnClickListener {
+            val fragment = DetailFragment().newInstance(modelListItem)
+            (activity as MainActivity).nextFragment(fragment, DetailFragment.TAG)
+        }
     }
 
     override fun onDestroyView() {

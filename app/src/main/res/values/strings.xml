@@ -5,6 +5,7 @@
     <string name="description">Description:</string>
 
     <string name="main">Main</string>
+    <string name="description_word">Description: %s</string>
     <string name="temp">Temperature: %1$d</string>
     <string name="pressure">Pressure: %1$d</string>
     <string name="humidity">Humidity: %1$d</string>

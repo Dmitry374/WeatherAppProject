@@ -22,7 +22,6 @@ class MainPresenter(private val repository: Repository) : MainContract.Presenter
 
     override fun attach(view: MainContract.View) {
         this.view = view
-        view.showListFragment() // as default
     }
 
     override fun loadData(ids: String) {
@@ -38,7 +37,7 @@ class MainPresenter(private val repository: Repository) : MainContract.Presenter
                 if (weatherCity != null) {
                     repository.saveWeatherCity(weatherCity)
 
-                    view.showList(weatherCity)
+                    view.showTabsFragment(weatherCity)
                 }
             }, { error ->
                 error.printStackTrace()

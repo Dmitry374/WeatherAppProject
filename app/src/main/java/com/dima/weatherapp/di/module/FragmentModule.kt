@@ -4,8 +4,8 @@ import com.dima.weatherapp.ui.detail.DetailContract
 import com.dima.weatherapp.ui.detail.DetailPresenter
 import com.dima.weatherapp.ui.list.WeatherListContract
 import com.dima.weatherapp.ui.list.WeatherListPresenter
-import com.dima.weatherapp.ui.list1.ListContract
-import com.dima.weatherapp.ui.list1.ListPresenter
+import com.dima.weatherapp.ui.tabs.TabsContract
+import com.dima.weatherapp.ui.tabs.TabsPresenter
 import dagger.Module
 import dagger.Provides
 
@@ -13,8 +13,8 @@ import dagger.Provides
 class FragmentModule {
 
     @Provides
-    fun provideListPresenter(): ListContract.Presenter {
-        return ListPresenter()
+    fun provideTabsPresenter(): TabsContract.Presenter {
+        return TabsPresenter()
     }
 
     @Provides
